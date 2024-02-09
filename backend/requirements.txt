@@ -1,0 +1,12 @@
+requests
+fastapi
+selenium
+chromedriver_autoinstaller_fix
+beautifulsoup4
+sqlalchemy
+fake_useragent
+undetected_chromedriver
+webdriver_manager
+python-dotenv
+replicate
+llama_index
