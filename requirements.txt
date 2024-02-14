@@ -1,0 +1,7 @@
+requests
+selenium
+chromedriver_autoinstaller_fix
+beautifulsoup4
+fake_useragent
+undetected_chromedriver
+webdriver_manager

@@ -15,117 +15,15 @@ const icon = new Leaflet.Icon({
 	iconSize: [25, 41],
 });
 
-// function MapEvents({ onDragEnd }) {
-// 	const map = useMapEvents({
-// 		dragend: () => {
-// 			const newCenter = map.getCenter();
-// 			onDragEnd([newCenter.lat, newCenter.lng]);
-// 		},
-// 	});
-
-// 	return null;
-// }
-
-// function App() {
-// 	const [center, setCenter] = useState([3.133075, 101.687034]);
-// 	const [markers, setMarkers] = useState([]);
-
-// 	const fetchMarkers = useCallback(() => {
-// 		fetch(
-// 			`http://localhost:5001/subways?lat=${center[0]}&lng=${center[1]}`,
-// 			{
-// 				method: "GET",
-// 			}
-// 		)
-// 			.then((res) => res.json())
-// 			.then((data) => {
-// 				setMarkers(data);
-// 			})
-// 			.catch((err) => {
-// 				console.log(err);
-// 			});
-// 	}, [center]);
-
-// 	useEffect(() => {
-// 		fetchMarkers();
-// 	}, [fetchMarkers]);
-
-// 	const handleDragEnd = useCallback((newCenter) => {
-// 		setCenter(newCenter);
-// 		fetch(
-// 			`http://localhost:5001/subways?lat=${center[0]}&lng=${center[1]}`,
-// 			{
-// 				method: "GET",
-// 			}
-// 		)
-// 			.then((res) => res.json())
-// 			.then((data) => {
-// 				setMarkers(data);
-// 			})
-// 			.catch((err) => {
-// 				console.log(err);
-// 			});
-// 	}, []);
-
-// 	return (
-// 		<div>
-// 			<div className="flex items-center justify-center h-screen">
-// 				<MapContainer
-// 					center={center}
-// 					zoom={13}
-// 					className="w-[1000px] h-[800px]"
-// 					attributionControl={false}
-// 				>
-// 					<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-// 					{markers &&
-// 						markers.length > 0 &&
-// 						markers.map((marker) => {
-// 							return (
-// 								<Marker
-// 									key={marker.subway_id}
-// 									position={[marker.lat, marker.lng]}
-// 									icon={icon}
-// 								>
-// 									<Popup>
-// 										<div>
-// 											<h2 className="text-2xl font-bold text-blue-700">
-// 												{marker.name}
-// 											</h2>
-// 											<p className="text-lg text-gray-600">
-// 												{marker.address}
-// 											</p>
-// 											<a
-// 												href={`${marker.waze}`}
-// 												className="flex items-center text-blue-500 hover:text-blue-700"
-// 											>
-// 												<img
-// 													src="/waze.png"
-// 													alt="Waze icon"
-// 													className="mr-2 w-[50px] h-[50px]"
-// 												/>
-// 											</a>
-// 										</div>
-// 									</Popup>
-// 								</Marker>
-// 							);
-// 						})}
-// 					<MapEvents onDragEnd={handleDragEnd} />
-// 				</MapContainer>
-// 			</div>
-// 		</div>
-// 	);
-// }
-
-// export default App;
-
 function App() {
+	const api_host = process.env.API_HOST || "http://localhost:5001";
 	const [question, setQuestion] = useState("");
 	const [answer, setAnswer] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
 	const askQuestion = async () => {
 		setIsLoading(true);
-		fetch(`http://localhost:5001/question?question=${question}`)
+		fetch(`${api_host}/question?question=${question}`)
 			.then((res) => res.json())
 			.then((data) => {
 				setIsLoading(false);
@@ -141,7 +39,7 @@ function App() {
 	const [markers, setMarkers] = useState([]);
 
 	const fetchMarkers = useCallback(() => {
-		fetch(`http://localhost:5001/subways?lat=${center[0]}&lng=${center[1]}`)
+		fetch(`${api_host}/subways?lat=${center[0]}&lng=${center[1]}`)
 			.then((res) => res.json())
 			.then((data) => {
 				setMarkers(data);
@@ -153,12 +51,9 @@ function App() {
 
 	const handleDragEnd = useCallback((newCenter) => {
 		setCenter(newCenter);
-		fetch(
-			`http://localhost:5001/subways?lat=${center[0]}&lng=${center[1]}`,
-			{
-				method: "GET",
-			}
-		)
+		fetch(`${api_host}/subways?lat=${center[0]}&lng=${center[1]}`, {
+			method: "GET",
+		})
 			.then((res) => res.json())
 			.then((data) => {
 				setMarkers(data);
